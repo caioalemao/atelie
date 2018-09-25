@@ -8,8 +8,6 @@ package VIEW;
 import DAO.ClienteDao;
 import DOMAIN.Cliente;
 import java.sql.ResultSet;
-import java.sql.Time;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,7 +72,6 @@ public class ClienteVIEW extends javax.swing.JFrame {
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
         eunaosei = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -97,6 +94,11 @@ public class ClienteVIEW extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbClienteMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbCliente);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -313,17 +315,20 @@ public class ClienteVIEW extends javax.swing.JFrame {
         });
 
         btAlterar.setText("ALTERAR");
-
-        btExcluir.setText("EXCLUIR");
-
-        eunaosei.setText("jLabel14");
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btAlterarActionPerformed(evt);
             }
         });
+
+        btExcluir.setText("EXCLUIR");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
+        eunaosei.setText("jLabel14");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -356,10 +361,6 @@ public class ClienteVIEW extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(476, 476, 476))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,14 +379,13 @@ public class ClienteVIEW extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btIncluir)
                                     .addComponent(btAlterar)
-                                    .addComponent(btExcluir)))
+                                    .addComponent(btExcluir))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(eunaosei))))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(23, 23, 23))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
@@ -420,10 +420,7 @@ public class ClienteVIEW extends javax.swing.JFrame {
 
         java.sql.Date dataHSql = new java.sql.Date(dataH.getTime());
         cliente.setDtCad(dataHSql); 
-        
-        
-        
-        
+       
         cliente.setCpf(txtCpf.getText());
         cliente.setRg(txtRg.getText());
         cliente.setSexo(txtSexo.getText());
@@ -434,11 +431,9 @@ public class ClienteVIEW extends javax.swing.JFrame {
         cliente.setNumero(txtNum.getText());
         cliente.setCidade(txtCidade.getText());
         
-        
-        
+ 
         cDAO.incluirCliete(cliente);
-        
-        
+             
         ResultSet rs= cDAO.consultarCliente();
         carregarDadosNaJTable(rs);
         
@@ -456,16 +451,93 @@ public class ClienteVIEW extends javax.swing.JFrame {
         txtEstado.setText("");
     }//GEN-LAST:event_btIncluirActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-String hoje = formatador.format(new Date(System.currentTimeMillis()));
-        System.out.println(hoje);// TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-    ClienteDao cDAO = new ClienteDao();
-    ResultSet rs= cDAO.consultarCliente();
-    carregarDadosNaJTable(rs);       
+        
+        ClienteDao cDAO = new ClienteDao();
+        ResultSet rs= cDAO.consultarCliente();
+        carregarDadosNaJTable(rs);  
+        
     }//GEN-LAST:event_formWindowOpened
+
+    private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
+        
+        ClienteDao cDAO = new ClienteDao();
+        Cliente cliente = new Cliente();
+        
+        cliente.setNome(txtNome.getText());
+        Date dataN = null;
+        Date dataH = null;
+        try {
+            dataN = formatador.parse(txtDtNasc.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(ServicoVIEW.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        java.sql.Date dataNSql = new java.sql.Date(dataN.getTime());
+        cliente.setDtNasc(dataNSql);
+        
+        String hoje = formatador.format(new Date(System.currentTimeMillis()));
+        try {
+            dataH = formatador.parse(hoje);
+        } catch (ParseException ex) {
+            Logger.getLogger(ClienteVIEW.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        java.sql.Date dataHSql = new java.sql.Date(dataH.getTime());
+        cliente.setDtCad(dataHSql); 
+
+        cliente.setCpf(txtCpf.getText());
+        cliente.setRg(txtRg.getText());
+        cliente.setSexo(txtSexo.getText());
+        cliente.setTelefone(txtTel.getText());
+        cliente.setCep(txtCep.getText());
+        cliente.setRua(txtRua.getText());
+        cliente.setBairro(txtBairro.getText());
+        cliente.setNumero(txtNum.getText());
+        cliente.setCidade(txtCidade.getText());
+
+        cDAO.alterarCliente(cliente);
+
+        ResultSet rs= cDAO.consultarCliente();
+        carregarDadosNaJTable(rs);
+        
+        txtNome.setText("");
+        txtDtNasc.setText("");
+        txtCpf.setText("");
+        txtRg.setText("");
+        txtSexo.setText("");
+        txtTel.setText("");
+        txtCep.setText("");
+        txtRua.setText("");
+        txtBairro.setText("");
+        txtNum.setText("");
+        txtCidade.setText("");
+        txtEstado.setText("");
+        
+    }//GEN-LAST:event_btAlterarActionPerformed
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+  
+        ClienteDao cDAO = new ClienteDao();
+        Cliente cliente = new Cliente();
+        
+        int linhaSelecionada = tbCliente.getSelectedRow();
+        int codigo = Integer.parseInt(tbCliente.getModel().getValueAt(linhaSelecionada, 0).toString());
+        
+        cliente.setIdCliente(codigo);
+        cDAO.excluirCliente(cliente);
+        
+        ResultSet rs= cDAO.consultarCliente();
+        carregarDadosNaJTable(rs);
+
+    }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void tbClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClienteMousePressed
+        
+        ClienteDao cDAO = new ClienteDao();
+        ResultSet rs = cDAO.consultarCliente();
+        carregarDadosNaJTable(rs);
+    
+    }//GEN-LAST:event_tbClienteMousePressed
     
         public void carregarDadosNaJTable(ResultSet rs){
         
@@ -522,7 +594,6 @@ String hoje = formatador.format(new Date(System.currentTimeMillis()));
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btIncluir;
     private javax.swing.JLabel eunaosei;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

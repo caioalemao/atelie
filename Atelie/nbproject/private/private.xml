@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/Atelie/src/VIEW/ClienteVIEW.java</file>
-            <file>file:/G:/Atelie/src/DAO/ServicoDao.java</file>
-            <file>file:/G:/Atelie/src/DAO/ClienteDao.java</file>
-            <file>file:/G:/Atelie/src/VIEW/ServicoVIEW.java</file>
-            <file>file:/G:/Atelie/src/DOMAIN/Cliente.java</file>
-            <file>file:/G:/Atelie/src/DOMAIN/Servico.java</file>
+            <file>file:/E:/Atelie/src/VIEW/ClienteVIEW.java</file>
+            <file>file:/E:/Atelie/src/VIEW/ServicoVIEW.java</file>
         </group>
     </open-files>
 </project-private>
