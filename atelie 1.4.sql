@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `ordemdeservico` (
   `dtEntrada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `situacao` varchar(15) NOT NULL,
   `ceOrdem` int(11) NOT NULL,
+  `valorTotal` float DEFAULT NULL,
   PRIMARY KEY (`idOrdemDeServico`),
   KEY `FK_ordemdeservico_cliente` (`ceCliente`),
   KEY `FK_ordemdeservico_ordem` (`ceOrdem`),
@@ -73,7 +74,9 @@ CREATE TABLE IF NOT EXISTS `pagamento` (
   `formaPag` varchar(7) NOT NULL,
   `ceOrdemServico` int(11) NOT NULL,
   `dataSistema` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idPagamento`)
+  PRIMARY KEY (`idPagamento`),
+  KEY `FK_pagamento_ordemdeservico` (`ceOrdemServico`),
+  CONSTRAINT `FK_pagamento_ordemdeservico` FOREIGN KEY (`ceOrdemServico`) REFERENCES `ordemdeservico` (`idOrdemDeServico`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Exportação de dados foi desmarcado.
