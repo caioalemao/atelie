@@ -34,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -87,6 +88,9 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("Pagamento");
+        jMenuBar1.add(jMenu4);
 
         jMenu3.setText("Relatórios");
         jMenu3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -181,6 +185,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

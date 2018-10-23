@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,6 +44,28 @@ public class OrdemDeServicoDao extends OrdemDeServico{
             System.err.println("Erro ao incluir: " + e);
         }
         
+    }
+    
+    public int contar(){ // metodo para contar o numero de linhas da tabela e retornar esse valor
+         ConexaoDao conexao = new ConexaoDao();
+        con = conexao.obterConexao();
+        ResultSet rs = null;
+        String sql = "Select * from ordemdeservico order by idOrdemDeServico";
+        try{
+            ps=con.prepareStatement(sql);
+            rs = ps.executeQuery();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+       int i=0 ;
+        try {
+            while(rs.next()){
+                 i =    rs.getInt("MAX(idOrdem)");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return i;
     }
     
      public void alterarOrdem(OrdemDeServico ods){
@@ -115,6 +139,9 @@ public class OrdemDeServicoDao extends OrdemDeServico{
         }//Fim catch
         return rs;  
     }
+    
+    
+    
     public ResultSet pesquisarODSPorNome(String nome){
         ResultSet rs = null;
         ConexaoDao conexao = new ConexaoDao();

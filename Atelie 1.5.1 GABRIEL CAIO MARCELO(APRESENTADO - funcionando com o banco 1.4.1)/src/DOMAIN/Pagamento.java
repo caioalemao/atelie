@@ -14,7 +14,25 @@ public class Pagamento {
     private String satatusPag;
     private String formaPag;
     private Integer ceOrdemServico;
+    private int numParc;
+    private float valorParc;
 
+    public int getNumParc() {
+        return numParc;
+    }
+
+    public void setNumParc(int numParc) {
+        this.numParc = numParc;
+    }
+
+    public float getValorParc() {
+        return valorParc;
+    }
+
+    public void setValorParc(float valorParc) {
+        this.valorParc = valorParc;
+    }
+    
     public float getValorTotal() {
         return valorTotal;
     }

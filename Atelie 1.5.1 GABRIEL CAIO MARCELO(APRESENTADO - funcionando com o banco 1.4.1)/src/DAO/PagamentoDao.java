@@ -21,13 +21,15 @@ public class PagamentoDao extends Pagamento{
      public void incluirPagamento(Pagamento pagamento){
          ConexaoDao con = new ConexaoDao();
          x = con.obterConexao();
-         String sql = "INSERT INTO Pagamento (valorTotal, statusPag, formaPag, ceOrdemServico) VALUE (?,?,?,?)";
+         String sql = "INSERT INTO Pagamento (valorTotal, statusPag, formaPag,numParcela, valorParcela, ceOrdemServico) VALUE (?,?,?,?,?,?)";
          try{
              ps=x.prepareCall(sql);
              ps.setFloat(1, pagamento.getValorTotal());
              ps.setString(2,pagamento.getSatatusPag());
              ps.setString(3,pagamento.getFormaPag());
-             ps.setInt(4, pagamento.getCeOrdemServico());
+             ps.setInt(4, pagamento.getNumParc());
+             ps.setFloat(5, pagamento.getValorParc());
+             ps.setInt(6, pagamento.getCeOrdemServico());
              ps.executeUpdate();
         }
          catch(SQLException e){
